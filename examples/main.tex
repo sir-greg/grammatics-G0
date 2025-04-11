@@ -1,0 +1,12 @@
+\input{preamble/preamble.tex}
+
+\begin{document}
+    \newpage
+    Будем считать, что грамматика $G_0 = <T, N, P, S>$ вычисляет $X$ и получает $Y$ $\iff$ из строки $SX!$ можно получить $Y$ (т. е. $'!'$ конечный символ), применяя правила $\in P$. По умолчанию будем считать, что $'!' \in T$ и $S \in N$. Кроме того, если в ходе описания правил $G$ появляется новый символ, будем считать его \underline{нетерминальным}.
+    % Sources:
+    \input{src/unary_sum.tex}
+    \input{src/doubler.tex}
+    \input{src/caster.tex}
+    \input{src/substring.tex}
+
+\end{document}

@@ -1,0 +1,65 @@
+\section{Поиск подстроки в строке}
+Даны строки $s$ и $t$. Необходимо найти первое вхождение строки $s$ в строку $t$ как подстроки.
+\[
+    s\#t \rightarrow \text{позиция первого вхождения $s$ в $t$}
+\]
+Если такой позиции не существует, грамматика оставит только $0$. 
+Пусть $\Sigma$ --- алфавит строк $s$ и $t$. Поставим каждому символу из $\Sigma$ нетерминальный символ, и сформируем таким образом дополнительное множество $\Sigma'$. \\
+
+Грамматика $G$ имеет вид:
+\begin{itemize}
+    \item $T = \Sigma \sqcup \set{\#, 1, 0}$
+    \item $N = \set{S} \sqcup \Sigma'$
+    \item $P\colon$ \\
+        \begin{itemize}
+            \item $S \mapsto S'C_{reset}$ 
+            \item $\forall \sigma \in \Sigma\colon C_{reset}\sigma \rightarrow \sigma'C_{reset}$, где $\sigma$ и $\sigma'$ соответствующие друг другу символы (по построению $\Sigma$ и $\Sigma'$) \\
+                Здесь отмечаем символы $s$, которые ещё не успели проверить на рав-во.
+            \item $C_{passed}\# \mapsto C_{passed_s}\#$
+            \item $C_{passed_s}\# \mapsto \# C_{passed_s}$ \\
+                Здесь запоминаем, что дальше идут символы $t$.
+            \item $C_{passed_s}\sigma' \mapsto \sigma'C_{passed_s}, \sigma' \in \Sigma'$ \\
+                Пропускаем проверенные символы $t$
+            \item $C_{passed_s}! \mapsto C_{kill}!$ \\
+                Если $C_{passed_s}$ встретил $!$, то размер $\left|s\right| > \left|t\right|$, а следовательно, ответа нет. (действия $C_{kill}$ описываются далее).
+            \item $C_{passed_s}\sigma \mapsto C_{= \sigma} \sigma', \sigma \in \Sigma \land \sigma' \in \Sigma'$ \\
+                Запоминаем, с каким символом нужно сравнивать.
+            \item $\alpha' C_{= \sigma} \mapsto C_{= \sigma} \alpha', \alpha' \in \Sigma' \lor \alpha' = \#$ \\
+                Пропускаем все проверенные символы, символы
+            \item $ C_{= \sigma}\beta' \mapsto C_{failed_{right}}\beta' , \beta \neq \sigma, \beta' \in \Sigma'$ \\
+                Если проверка не пройдена, то делаем перезапуск, и превращаем первый символ $t$ в $\#$.
+            \begin{itemize}
+                \item $C_{failed_{right_s}} \beta' \mapsto \beta C_{failed_{right_s}}, \beta \in \Sigma$
+                \item $C_{failed_{right_s}} \# \mapsto C_{failed_{\#}} \#$
+                \item $C_{failed_{\#}} \# \mapsto \# C_{failed_{\#}}$
+                \item $C_{failed_{\#}} a \mapsto \# C_{failed_{right_t}}$, \underline{здесь} $a \in \Sigma \cup \Sigma'$ \\
+                    Если на этом моменте оказывается, что после $C_{failed_{right_t}}$ следует $!$, то ответа нет, а значит, мы должны стереть всё:
+                \item $C_{failed_{right_t}}! \rightarrow C_{kill}!$
+                \item $\alpha C_{kill} \rightarrow C_{kill}, \forall \alpha \in N \cup T \backslash \set{S'}$
+                \item $S' C_{kill} ! \rightarrow 0$ \\
+                    Иначе, готовимся к следующей итерации.
+                \item $C_{failed_{right_t}}\beta' \mapsto \beta C_{failed_{right_t}}, \beta \in \Sigma, \beta' \in \Sigma'$
+                \item $C_{failed_{right_t}}\beta \mapsto C_{left}\beta, \beta \in \Sigma$
+                \item $\beta C_{left} \mapsto C_{left} \beta$, $\beta \neq S', \beta \in \Sigma \cup \set{\#}$
+                \item $S'C_{left} \mapsto S'C_{reset}$
+            \end{itemize} 
+            \item $C_{=\sigma}\sigma' \mapsto \sigma C_{passed}, \sigma \in \Sigma, \sigma' \in \Sigma'$ \\
+                Если проверка пройдена, то переходим к следующему символу.
+            \item $C_{passed}\# \mapsto C_{output_{right}}$ \\
+                Если последний символ $s$ прошёл проверку, то стираем всё, кроме $\#$ и заменяем $\#$ на $1$.
+                \begin{itemize}
+            \item $C_{output_{right}}\alpha \mapsto \alpha C_{output_{right}}, \forall \alpha \in T \cup N \backslash \set{!}$
+            \item $C_{output_{right}}! \mapsto C_{output_{left}}!$
+            \item $\alpha C_{output_{left}} \rightarrow C_{output_{left}}, \forall \alpha \neq \#$
+            \item $\# C_{output_{left}} \mapsto 1$
+            \item $\alpha 1 \mapsto 1, \alpha \neq \#$
+            \item $ \# 1 \mapsto 1 1$
+                \end{itemize}
+        \end{itemize}
+        По итогу этой части остаётся строка вида (если вхождение было найдено): 
+        \[
+        S' 1\ldots 1 !
+        \]
+        Где ответ представлен в унарной системе счисления. \\
+        Перевод унарной записи в двоичную описан в предыдущей задаче.
+\end{itemize}

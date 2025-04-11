@@ -1,0 +1,15 @@
+\section{Сложение унарных чисел}
+\[
+    \underbrace{1\ldots 1}_{a}+\underbrace{1\ldots 1}_{b} \rightarrow \underbrace{1 \ldots 1}_{a + b}
+\]
+Грамматика $G = <T, N, P, S>$:
+\begin{itemize}
+    \item $T = \set{1, +}$
+    \item $N = \set{S}$
+    \item $P\colon$
+        \begin{itemize}
+            \item $S' 1\mapsto 1 S'$ --- движемся к символу $+$
+            \item $S' + \mapsto \varepsilon$ --- удаляем $+$ и завершаем программу
+        \end{itemize}
+\end{itemize}
+

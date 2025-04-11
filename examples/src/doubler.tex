@@ -1,0 +1,23 @@
+\section{Удвоитель}
+\[
+    1^{n} \rightarrow 1^{2n}
+\]
+Будем считать, что входная и выходная строки обрамлены скобками, т. е. начальная строка имеет вид:
+\[
+    1^{n} \rightarrow S(1^{n})
+\]
+А конечная:
+\[
+    (1^{2n})
+\]
+Тогда $G = <T, N, P, S>$ имеет вид:
+\begin{itemize}
+    \item $T = \set{1, '(', ')'}$
+    \item $N = \set{S, S'}$
+    \item $P\colon$
+        \begin{itemize}
+            \item $S( \rightarrow (S'$ --- начинаем обработку строки
+            \item $S'1 \rightarrow 11S'$ --- удваиваем единицы
+            \item $S') \rightarrow )$ --- завершаем работу.
+        \end{itemize}
+\end{itemize}
