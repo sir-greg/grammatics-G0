@@ -1,39 +1,34 @@
 # Грамматика языка
 
-<program> ::= T = '{' {<symbol>,}<symbol> '}';
-              N = '{' {<symbol>,}<symbol> '}';
-              <set_of_rules>
+<program> ::= <terminals_set><nonterminals_set><set_of_rules>
+
+<terminals_set> ::= T = <grammar_symbol_set>;
+
+<nonterminals_set> ::= N = <grammar_symbol_set>;
+
+<grammar_symbols_set> ::= '{' {<grammar_symbol>,}<grammar_symbol> '}'
 
 <set_of_rules> ::= {<rule>;}<rule>.
 
 <rule> ::= <non_empty_string><transforms_to><string>
 
-<transforms_to> ::= "->"
+<transforms_to> ::= "\->"
 
 <string> ::= <non_empty_string> | <empty_string>
 
-<non_empty_string> ::= {<symbol>}<symbol>
+<non_empty_string> ::= {<grammar_symbol>}<grammar_symbol>
 
-<symbol> ::= <string_literal>(<lower_index>)(<upper_index>){<apostrophe>}
-
-<lower_index> ::= <lower_index_delimeter>'{'<string_literal>'}'
-<lower_index_delimeter> ::= _
-
-<upper_index> ::= <upper_index_delimeter>'{'<string_literal>'}'
-<upper_index_delimeter> ::= ^
-
-<apostrophe> ::= '
+<grammar_symbol> ::= <letter>
 
 <string_literal> ::= {<letter>}<letter>
 
-<letter> ::= ASCII без '^', ', '=', '>', '_',
-                       '', ';', 
-                       '{', '}', 
-                       '(', ')', 
-                       '[', ']'.
+<letter> ::= <regular_letter> | <special_letter>
 
-<special_letter> ::= \x, где x - исключённый символ в <letter>,
-                     \E - символ пустой строки,
-                     \S - начальный символ.
+<regular_letter> ::= ASCII без whitespace символов, ';', '.' и ','
+
+<special_letter> ::= \E - символ пустой строки,
+                     \S - начальный символ,
+                     \! - символ конца входных данных
+                     \\
 
 <empty_string> ::= \E 
