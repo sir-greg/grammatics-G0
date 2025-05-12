@@ -1,0 +1,4 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {1}Сложение унарных чисел}{2}{}%
+\contentsline {section}{\numberline {2}Удвоитель}{2}{}%
+\contentsline {section}{\numberline {3}Поиск подстроки в строке}{3}{}%

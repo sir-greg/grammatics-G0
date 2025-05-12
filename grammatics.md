@@ -18,13 +18,19 @@
 
 <non_empty_string> ::= {<grammar_symbol>}<grammar_symbol>
 
-<grammar_symbol> ::= <letter>
+<grammar_symbol> ::= <special_letter> | <maybe_indexed_symbol
 
-<string_literal> ::= {<letter>}<letter>
+<maybe_indexed_symbol> ::= <regular_letter>(<lower_index>)(<apostrophe>)
+
+<apostrophe> ::= '
+
+<lower_index> ::= '_''{'<index_string>'}'
+
+<index_string> ::= {<regular_letter>}<regular_letter>
 
 <letter> ::= <regular_letter> | <special_letter>
 
-<regular_letter> ::= ASCII без whitespace символов, ';', '.' и ','
+<regular_letter> ::= ASCII без whitespace символов, ':', ';', '.', ',', '\', '>', '_', '{', '}', <apostrophe>
 
 <special_letter> ::= \E - символ пустой строки,
                      \S - начальный символ,
