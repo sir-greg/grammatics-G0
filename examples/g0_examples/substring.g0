@@ -1,0 +1,85 @@
+T = {0, 1};
+N = {S_{real}, S', 0', 1', C_{color-unused}, C_{go-to-first-unchecked-symbol},
+     C_{erase-everything-after-s-inclusive}, C_{erase-right},
+     C_{carry-right-0}, C_{carry-right-1}, C_{abort-check},
+     C_{go-left}, C_{continue-check}, C_{self-destruct}, C_{destroy-ones-before-S},
+     C_{erase-s-real}};
+
+\S >> S_{real}1S'C_{color-unused};
+
+C_{color-unused}0 >> 0'C_{color-unused};
+C_{color-unused}1 >> 1'C_{color-unused};
+C_{color-unused}# >> C_{go-to-first-unchecked-symbol}#;
+C_{color-unused}0' >> C_{go-to-first-unchecked-symbol}0';
+C_{color-unused}1' >> C_{go-to-first-unchecked-symbol}1';
+
+
+0'C_{go-to-first-unchecked-symbol} >> C_{go-to-first-unchecked-symbol}0';
+1'C_{go-to-first-unchecked-symbol} >> C_{go-to-first-unchecked-symbol}1';
+
+0C_{go-to-first-unchecked-symbol}# >> 0C_{erase-everything-after-s-inclusive};
+1C_{go-to-first-unchecked-symbol}# >> 1C_{erase-everything-after-s-inclusive};
+
+    0C_{erase-everything-after-s-inclusive} >> C_{erase-everything-after-s-inclusive}0;
+    1C_{erase-everything-after-s-inclusive} >> C_{erase-everything-after-s-inclusive}1;
+    S'C_{erase-everything-after-s-inclusive} >> C_{erase-right};
+    C_{erase-right}0 >> C_{erase-right};
+    C_{erase-right}1 >> C_{erase-right};
+    C_{erase-right}0' >> C_{erase-right};
+    C_{erase-right}1' >> C_{erase-right};
+    C_{erase-right}\! >> C_{erase-s-real};
+    1C_{erase-s-real} >> C_{erase-s-real}1;
+    S_{real}C_{erase-s-real} >> \E;
+
+S'C_{go-to-first-unchecked-symbol}0' >> S'0C_{carry-right-0};
+S'C_{go-to-first-unchecked-symbol}1' >> S'1C_{carry-right-1};
+
+0C_{go-to-first-unchecked-symbol}0' >> 00C_{carry-right-0};
+1C_{go-to-first-unchecked-symbol}0' >> 10C_{carry-right-0};
+
+0C_{go-to-first-unchecked-symbol}1' >> 01C_{carry-right-1};
+1C_{go-to-first-unchecked-symbol}1' >> 11C_{carry-right-1};
+
+C_{carry-right-0}0' >> 0'C_{carry-right-0};
+C_{carry-right-0}1' >> 1'C_{carry-right-0};
+
+C_{carry-right-1}0' >> 0'C_{carry-right-1};
+C_{carry-right-1}1' >> 1'C_{carry-right-1};
+
+C_{carry-right-0}# >> #C_{carry-right-0};
+C_{carry-right-1}# >> #C_{carry-right-1};
+
+C_{carry-right-0}1 >> C_{abort-check}1;
+C_{carry-right-1}0 >> C_{abort-check}0;
+
+    0'C_{abort-check} >> C_{abort-check}0;
+    1'C_{abort-check} >> C_{abort-check}1;
+
+    #C_{abort-check}0 >> C_{go-left}#;
+    #C_{abort-check}1 >> C_{go-left}#;
+
+    0'C_{go-left} >> C_{go-left}0;
+    1'C_{go-left} >> C_{go-left}1;
+    0C_{go-left} >> C_{go-left}0;
+    1C_{go-left} >> C_{go-left}1;
+    S'C_{go-left} >> 1S'C_{color-unused};
+
+C_{carry-right-0}0 >> C_{continue-check}0';
+C_{carry-right-1}1 >> C_{continue-check}1';
+
+    0'C_{continue-check} >> C_{continue-check}0';
+    1'C_{continue-check} >> C_{continue-check}1';
+    #C_{continue-check} >> C_{go-to-first-unchecked-symbol}#;
+
+C_{carry-right-0}\! >> C_{self-destruct}\!;
+C_{carry-right-1}\! >> C_{self-destruct}\!;
+
+0 C_{self-destruct} >> C_{self-destruct};
+1 C_{self-destruct} >> C_{self-destruct};
+0'C_{self-destruct} >> C_{self-destruct};
+1'C_{self-destruct} >> C_{self-destruct};
+# C_{self-destruct} >> C_{self-destruct};
+S'C_{self-destruct}\! >> C_{destroy-ones-before-S}\!;
+1C_{destroy-ones-before-S} >> C_{destroy-ones-before-S};
+S_{real}C_{destroy-ones-before-S}\! >> 0.
+
