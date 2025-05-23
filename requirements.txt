@@ -1,0 +1,22 @@
+# linters 
+pylint
+flake8
+MyPy
+Pyright
+isort
+pydocstyle
+
+# formatters
+autopep8
+black
+yapf
+
+# Qt6
+PySide6
+
+# Testing framework
+pytest
+pytest-cov
+
+# Installer
+pyinstaller

@@ -1,0 +1,23 @@
+T = {0, 1};
+N = {B, B', C_{cleanLeft}, C_{cleanRight}, B_{x}, B_{y}, B_{z}, 1'};
+
+\S >> B0B';
+
+B'\! >> C_{cleanLeft}\!;
+0C_{cleanLeft} >> C_{cleanLeft}0;
+1C_{cleanLeft} >> C_{cleanLeft}1;
+BC_{cleanLeft} >> C_{cleanRight};
+C_{cleanRight}0 >> 0C_{cleanRight};
+C_{cleanRight}1 >> 1C_{cleanRight};
+C_{cleanRight}\! >> \E;
+
+B'1 >> 1'B_{x}B_{y};
+11' >> 1'0;
+01' >> 1;
+B1' >> B1;
+1B_{x} >> B_{x}1;
+0B_{x} >> B_{x}0;
+BB_{x} >> BB_{z};
+B_{z}1 >> 1B_{z};
+B_{z}0 >> 0B_{z};
+B_{z}B_{y} >> B'.
