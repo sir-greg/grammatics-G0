@@ -59,3 +59,4 @@ B_{12}'
 PYTHONPATH=src python -m pytest --cov src tests
 ```
 в корневой папке проекта.
+
